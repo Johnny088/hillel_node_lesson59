@@ -1,5 +1,11 @@
 import express from 'express';
-import { addNewTask, readTaskById, readTasks } from './services/taskService.js';
+import {
+  addNewTask,
+  deleteTask,
+  readTaskById,
+  readTasks,
+  updateTask,
+} from './services/taskService.js';
 
 import { PORT } from './constants.js';
 import chalk from 'chalk';
@@ -33,6 +39,28 @@ app.post('/tasks', async (req, res) => {
   res.status(201).json(`task: '${title}' is created`);
 });
 
+app.delete('/tasks/:id', async (req, res) => {
+  const { id } = req.params;
+
+  const task = await deleteTask(Number(id));
+  if (!task) {
+    res.status(404).json(`the task with '${id}' wasn't found`);
+    return;
+  }
+  res.sendStatus(204);
+});
+
+app.patch('/tasks/:id', async (req, res) => {
+  const { id } = req.params;
+  const task = await updateTask(Number(id), req.body);
+  if (!task) {
+    res
+      .status(404)
+      .json({ message: `the task with the id: '${id}' wasn't found` });
+    return;
+  }
+  res.status(201).json({ message: `the task with the id: '${id}' is updated` });
+});
 //
 
 app.listen(PORT, error => {

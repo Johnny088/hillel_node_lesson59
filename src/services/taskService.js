@@ -43,13 +43,56 @@ export const addNewTask = async newTask => {
   const tasks = await readTasks();
 
   const id =
-    (tasks.length === 0
+    tasks.length === 0
       ? 1
       : tasks.reduce((acc, task) => {
           return task.id > acc ? task.id : acc;
-        }, 0)) + 1;
+        }, 0) + 1;
 
   tasks.push({ title: newTask, id, completed: false });
   await writeTasks(tasks);
+  return true;
+};
+
+export const deleteTask = async id => {
+  if (Number.isNaN(id)) {
+    console.log(chalk.red('Id is required and must be a number'));
+    return false;
+  }
+
+  const tasks = await readTasks();
+
+  const filteredTasks = tasks.filter(task => task.id !== id);
+  if (tasks.length === filteredTasks.length) {
+    console.log(chalk.red(`task with a such id '${id}' doesn't exist `));
+
+    return false;
+  }
+  await writeTasks(filteredTasks);
+
+  console.log(chalk.red(`Task with an id '${id}' is deleted`));
+  return true;
+};
+
+export const updateTask = async (id, newTask) => {
+  if (Number.isNaN(id)) {
+    console.log(chalk.red('Id is required and must be a number'));
+    return false;
+  }
+
+  const tasks = await readTasks();
+
+  const checkId = tasks.find(task => task.id === id);
+  if (!checkId) {
+    console.log(chalk.red(`task with a such id '${id}' doesn't exist `));
+    return false;
+  }
+
+  const updatedTasks = tasks.map(task =>
+    task.id === id ? { ...task, ...newTask } : task,
+  );
+
+  await writeTasks(updatedTasks);
+  console.log(chalk.green(`Task with id '${id}' is updated`));
   return true;
 };
