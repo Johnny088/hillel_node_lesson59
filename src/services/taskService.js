@@ -14,3 +14,42 @@ export const readTasks = async () => {
     return [];
   }
 };
+
+export const readTaskById = async id => {
+  if (Number.isNaN(id)) {
+    console.log(chalk.red('Id is required and must be a number'));
+    return false;
+  }
+
+  const tasks = await readTasks();
+
+  const task = tasks.find(task => task.id === id);
+  if (!task) {
+    console.log(chalk.red(`task with such id: '${id}' doesn't exist`));
+    return false;
+  }
+  return task;
+};
+
+export const writeTasks = async tasks => {
+  await fs.writeFile(DB_PATH, JSON.stringify(tasks, null, 2));
+};
+
+export const addNewTask = async newTask => {
+  if (!newTask || newTask.trim() === '') {
+    console.log(chalk.red('new task can not be empty'));
+    return false;
+  }
+  const tasks = await readTasks();
+
+  const id =
+    (tasks.length === 0
+      ? 1
+      : tasks.reduce((acc, task) => {
+          return task.id > acc ? task.id : acc;
+        }, 0)) + 1;
+
+  tasks.push({ title: newTask, id, completed: false });
+  await writeTasks(tasks);
+  return true;
+};
