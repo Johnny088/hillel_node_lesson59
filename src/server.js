@@ -62,6 +62,9 @@ app.patch('/tasks/:id', async (req, res) => {
   res.status(201).json({ message: `the task with the id: '${id}' is updated` });
 });
 //
+app.use((req, res) => {
+  res.status(404).json({ message: 'route not found' });
+});
 
 app.listen(PORT, error => {
   if (error) {
