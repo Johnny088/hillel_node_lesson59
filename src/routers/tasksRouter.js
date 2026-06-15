@@ -7,16 +7,16 @@ import {
   updateTaskById,
 } from '../controllers/tasks.js';
 
-const taskRouter = Router();
+const tasksRouter = Router();
 
-taskRouter.get('/tasks', getTasks);
+tasksRouter.get('/tasks', getTasks);
 
-taskRouter.get('/tasks/:id', getTaskById);
+tasksRouter.get('/tasks/:id', getTaskById);
 
-taskRouter.delete('/tasks/:id', removeTaskById);
+tasksRouter.delete('/tasks/:id', removeTaskById);
 
-taskRouter.post('/tasks', addNewTask);
+tasksRouter.post('/tasks', addNewTask);
 
-taskRouter.patch('/tasks/:id', updateTaskById);
+tasksRouter.patch('/tasks/:id', updateTaskById);
 
-export default taskRouter;
+export default tasksRouter;

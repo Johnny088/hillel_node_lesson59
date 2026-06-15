@@ -1,6 +1,6 @@
 import express from 'express';
 import { PORT } from './constants.js';
-import taskRouter from './routers/tasksRouter.js';
+import tasksRouter from './routers/tasksRouter.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 
@@ -8,7 +8,7 @@ const app = express();
 
 app.use(express.json());
 
-app.use(taskRouter);
+app.use(tasksRouter);
 
 app.use(notFoundHandler);
 
