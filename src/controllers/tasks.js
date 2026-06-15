@@ -72,7 +72,7 @@ export const updateTaskById = async (req, res) => {
   //   return;
   // }
   const tasks = await readTasks();
-  const checkId = tasks.find(task => task.id === Number(id));
+  // const checkId = tasks.find(task => task.id === Number(id));
   // if (!checkId) {
   //   res.status(404).json({ message: `task with id: '${id}' isn't found` });
   //   return;
