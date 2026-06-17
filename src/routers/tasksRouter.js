@@ -9,14 +9,14 @@ import {
 
 const tasksRouter = Router();
 
-tasksRouter.get('/tasks', getTasks);
+tasksRouter.get('', getTasks);
 
-tasksRouter.get('/tasks/:id', getTaskById);
+tasksRouter.get('/:id', getTaskById);
 
-tasksRouter.delete('/tasks/:id', removeTaskById);
+tasksRouter.delete('/:id', removeTaskById);
 
-tasksRouter.post('/tasks', addNewTask);
+tasksRouter.post('', addNewTask);
 
-tasksRouter.patch('/tasks/:id', updateTaskById);
+tasksRouter.patch('/:id', updateTaskById);
 
 export default tasksRouter;
