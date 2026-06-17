@@ -1,4 +1,5 @@
-import { idNotFound, readTasks, writeTasks } from '../services/taskService.js';
+import { idNotFound } from '../constants.js';
+import { readTasks, writeTasks } from '../services/taskService.js';
 
 export const getTasks = async (req, res) => {
   const tasks = await readTasks();

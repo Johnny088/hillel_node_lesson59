@@ -10,5 +10,3 @@ export const readTasks = async () => {
 export const writeTasks = async tasks => {
   await fs.writeFile(DB_PATH, JSON.stringify(tasks, null, 2));
 };
-
-export const idNotFound = { message: "such id isn't found" };
